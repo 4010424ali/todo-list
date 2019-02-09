@@ -3,10 +3,19 @@ import Tudoitem from "./Tudoitem";
 
 class TodoList extends Component {
   render() {
-    const { items, clearList, handleDelete, handleEdit } = this.props;
+    const {
+      items,
+      clearList,
+      handleDelete,
+      handleEdit,
+      emptyValue
+    } = this.props;
     return (
       <ul className="list-group my-5">
         <h3 className="text-capitalize text-center">Tudo List</h3>
+        {emptyValue ? (
+          <div class="alert alert-primary">Please Add item</div>
+        ) : null}
         {items.map(item => {
           return (
             <Tudoitem

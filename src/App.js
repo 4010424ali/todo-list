@@ -11,7 +11,8 @@ class App extends Component {
     items: [],
     id: uuid(),
     item: "",
-    editItem: false
+    editItem: false,
+    emptyValue: false
   };
   handleChange = e => {
     this.setState({
@@ -26,14 +27,21 @@ class App extends Component {
       title: this.state.item
     };
 
-    const updateItem = [...this.state.items, newItem];
+    if (this.state.item === "") {
+      this.setState({
+        emptyValue: true
+      });
+    } else {
+      const updateItem = [...this.state.items, newItem];
 
-    this.setState({
-      items: updateItem,
-      item: "",
-      id: uuid(),
-      editItem: false
-    });
+      this.setState({
+        items: updateItem,
+        item: "",
+        id: uuid(),
+        editItem: false,
+        emptyValue: false
+      });
+    }
   };
   clearList = () => {
     this.setState({
@@ -55,7 +63,6 @@ class App extends Component {
     });
 
     const selectedItem = this.state.items.find(item => item.id === id);
-    console.log(selectedItem);
 
     this.setState({
       items: filteredItem,
@@ -77,6 +84,7 @@ class App extends Component {
                 handleSubmit={this.handleSubmit}
                 clearList={this.clearList}
                 editItem={this.state.editItem}
+                emptyValue={this.state.emptyValue}
               />
               <TudoList
                 items={this.state.items}
